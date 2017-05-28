@@ -1,0 +1,257 @@
+<html>
+<head>
+  <title>Entertainment Rigging Bridle Calculator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="description" content="Simple bridle calculator for entertainment rigging.">
+  <link rel="canonical" href="http://easybridle.com/">
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="libraries/p5.dom.js"></script>
+  <script language="javascript" type="text/javascript" src="sketchRig.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="easybridle.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container">
+<div class="jumbotron">
+  <h1>steve's bridle calculator</h1>
+  <h2>send it up once.</h2>
+</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-8 col-xs-offset-2">
+      <ul>
+        <li>Enter Span (distance between beams)</li>
+        <li>Offset (horizontal distance from left beam to apex)</li>
+        <li>Height (vertical distance from beams to apex)</li>
+        <li>Calculate Legs</li>
+        <li>Use Fix Legs to set one side and calculate the other</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <form class="input-form">
+    <div class="row">
+      <div class="col-xs-6 col-sm-3 col-sm-offset-2" >
+        <div class="input-group">
+          <span class="input-group-addon" id="input-span-label">Span</span>
+          <input type="number" class="form-control" id="input-span" value="8">
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3 col-sm-offset-2" >
+        <div class="input-group">
+          <input type="number" class="form-control" id="fix-left-leg" value="5.7">
+          <span class="input-group-addon" id="fix-left-leg-label" onclick="fixA()">Fix Left</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-3 col-sm-offset-2" >
+        <div class="input-group">
+          <span class="input-group-addon" id="input-offset-label">Offset</span>
+          <input type="number" class="form-control"  id="input-offset" value="4">
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3 col-sm-offset-2" >
+        <div class="input-group">
+          <input type="number" class="form-control" id="fix-right-leg" value="5.7">
+          <span class="input-group-addon" id="fix-right-leg-label" onclick="fixB()">Fix Right</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-3 col-sm-offset-2" >
+        <div class="input-group">
+          <span class="input-group-addon" id="input-height-label">Height</span>
+          <input type="number" class="form-control" id="input-height" value="4">
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3 col-sm-offset-2" >
+        <div class="input-group">
+          <input type="number" class="form-control" id="apex-angle" value="1">
+          <span class="input-group-addon" id="apex-angle-label">Apex Angle</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-3 col-sm-offset-2" >
+        <div class="btn btn-info" id="calculate" onclick="calcLegs()">Calculate Legs</div>
+      </div>
+      <div class="col-xs-6 col-sm-3 col-sm-offset-2" >
+        <div class="input-group">
+          <input type="number" class="form-control" id="load" value="1000">
+          <span class="input-group-addon" id="load-label">Load</span>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+
+</div>
+
+<div class="row">
+  <div id='myCanvas'></div>
+</div>
+
+
+<div class="container">
+
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-xs-5 col-sm-4 col-sm-offset-1" >
+      <div class="input-group">
+        <span class="input-group-addon" id="left-links-label">Links</span>
+        <input type="number" class="form-control" id="left-links" value="8">
+      </div>
+    </div>
+    <div class="col-xs-2 center-button">
+        <div class="btn btn-danger remove">Remove</div>
+    </div>
+    <div class="col-xs-5 col-sm-4" >
+      <div class="input-group">
+        <input type="number" class="form-control" id="right-links" value="7">
+        <span class="input-group-addon" id="right-links-label">Links</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5 col-sm-4 col-sm-offset-1" >
+      <div class="input-group">
+        <span class="input-group-addon" id="left-one-label">1 Ft.</span>
+        <input type="number" class="form-control" id="left-one" value="8">
+      </div>
+    </div>
+    <div class="col-xs-2 center-button">
+        <div class="btn btn-danger remove">Remove</div>
+    </div>
+    <div class="col-xs-5 col-sm-4" >
+      <div class="input-group">
+        <input type="number" class="form-control" id="right-one" value="7">
+        <span class="input-group-addon" id="right-one-label">1 Ft.</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5 col-sm-4 col-sm-offset-1" >
+      <div class="input-group">
+        <span class="input-group-addon" id="left-two-label">2 Ft.</span>
+        <input type="number" class="form-control" id="left-two" value="8">
+      </div>
+    </div>
+    <div class="col-xs-2 center-button">
+        <div class="btn btn-danger remove">Remove</div>
+    </div>
+    <div class="col-xs-5 col-sm-4" >
+      <div class="input-group">
+        <input type="number" class="form-control" id="right-two" value="7">
+        <span class="input-group-addon" id="right-two-label">2 Ft.</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5 col-sm-4 col-sm-offset-1" >
+      <div class="input-group">
+        <span class="input-group-addon" id="left-five-label">5 Ft.</span>
+        <input type="number" class="form-control" id="left-five" value="8">
+      </div>
+    </div>
+    <div class="col-xs-2 center-button">
+        <div class="btn btn-danger remove">Remove</div>
+    </div>
+    <div class="col-xs-5 col-sm-4" >
+      <div class="input-group">
+        <input type="number" class="form-control" id="right-five" value="7">
+        <span class="input-group-addon" id="right-five-label">5 Ft.</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5 col-sm-4 col-sm-offset-1" >
+      <div class="input-group">
+        <span class="input-group-addon" id="left-ten-label">10 Ft.</span>
+        <input type="number" class="form-control steel" id="left-ten" data-lengths="10" value="8">
+      </div>
+    </div>
+    <div class="col-xs-2 center-button">
+        <div class="btn btn-danger remove">Remove</div>
+    </div>
+    <div class="col-xs-5 col-sm-4" >
+      <div class="input-group">
+        <input type="number" class="form-control steel" id="right-ten" data-lengths="10" value="7">
+        <span class="input-group-addon" id="right-ten-label">10 Ft.</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5 col-sm-4 col-sm-offset-1" >
+      <div class="input-group">
+        <span class="input-group-addon" id="left-twenty-label">20 Ft.</span>
+        <div type="number" class="form-control steel" id="left-twenty" data-lengths="20"></div>
+      </div>
+    </div>
+    <div class="col-xs-2 center-button">
+        <div class="btn btn-danger remove">Rem</div>
+    </div>
+    <div class="col-xs-5 col-sm-4" >
+      <div class="input-group">
+        <input type="number" class="form-control steel" id="right-twenty" data-lengths="20" value="7">
+        <span class="input-group-addon" id="right-twenty-label" >20 Ft.</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" >
+      <div class="btn btn-info" id="reset" onclick="resetPanels()">Reset Steel</div>
+      <div class="btn btn-info" id="showRemove" onclick="showRemove()">Show Remove</div>
+      <div class="btn btn-info" id="hideRemove" onclick="hideRemove()">Hide Remove</div>
+
+    </div>
+
+  </div>
+
+  </div>
+
+</div>
+
+<script>
+const removeButtons = document.querySelectorAll('.remove');
+const rows = document.querySelectorAll('.row.fade');
+console.log(rows);
+
+function toggleFade() {
+  $(this).closest(".row").addClass("fade");
+
+}
+
+function showRemove() {
+  removeButtons.forEach(button => $(button).removeClass("hidden"));
+}
+
+function hideRemove() {
+  removeButtons.forEach(button => $(button).addClass("hidden"));
+  document.querySelectorAll('.row.fade').forEach(row => $(row).addClass("hidden"));
+}
+
+function resetPanels() {
+  removeButtons.forEach(button => $(button).closest(".row").removeClass("hidden fade"));
+  showRemove();
+}
+
+removeButtons.forEach(button => button.addEventListener('click', toggleFade));
+
+</script>
+
+</body>
+</html>

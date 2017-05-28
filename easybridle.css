@@ -1,0 +1,70 @@
+.jumbotron {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.jumbotron h2 {
+  color: #777;
+
+}
+
+.row {
+  padding-bottom: 15px;
+}
+
+#input-span-label {
+  color: rgb(255, 255, 255);
+  background-color: rgb(217, 83, 79);
+}
+
+#fix-left-leg-label {
+  color: rgb(255, 255, 255);
+  background-color: rgb(42, 171, 210);
+}
+
+#fix-left-leg-label:hover {
+  cursor: pointer;
+}
+
+#fix-right-leg-label:hover {
+  cursor: pointer;
+}
+
+#input-offset-label {
+  color: rgb(255, 255, 255);
+  background-color: rgb(92, 184, 92);
+}
+
+#fix-right-leg-label {
+  color: rgb(255, 255, 255);
+  background-color: rgb(42, 171, 210);
+}
+
+#input-height-label {
+  color: rgb(255, 255, 255);
+  background-color: rgb(51, 122, 183);
+}
+
+#apex-angle-label {
+  color: rgb(255, 255, 255);
+  background-color: rgb(121, 201, 94);
+}
+
+#load-label {
+  color: rgb(255, 255, 255);
+  background-color: rgb(178, 66, 215);
+}
+
+.center-button {
+  padding: 0px 5px 0px 5px !important;
+}
+
+.row {
+  -webkit-transition: opacity 1s ease;
+  transition: opacity 1s;
+}
+
+.row.fade {
+  opacity: 0;
+  /*transform: translateX(100%);*/
+}
